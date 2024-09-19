@@ -2,13 +2,24 @@
 import fetch from 'node-fetch';
 
 export default async (req, res) => {
-  // Handle preflight request
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow any origin
-    res.setHeader('Access-Control-Allow-Methods', 'POST'); // Allow POST
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
-    return res.status(200).end(); // Respond to OPTIONS request with success
+  // Add CORS headers to handle cross-origin requests
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Allow requests from all origins
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS"); // Allow specific methods
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Allow specific headers
+
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    res.status(200).end(); // Return a success response for preflight request
+    return;
   }
+  
+  // Handle preflight request
+  // if (req.method === 'OPTIONS') {
+  //   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow any origin
+  //   res.setHeader('Access-Control-Allow-Methods', 'POST'); // Allow POST
+  //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
+  //   return res.status(200).end(); // Respond to OPTIONS request with success
+  // }
 
   if (req.method === 'POST') {
     try {
